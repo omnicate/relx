@@ -104,6 +104,8 @@ name(#{name := Name}) ->
     Name.
 
 -spec vsn(t()) -> string().
+vsn(#{vsn := Vsn}) when is_atom(Vsn)->
+    atom_to_list(Vsn);
 vsn(#{vsn := Vsn}) ->
     Vsn.
 
