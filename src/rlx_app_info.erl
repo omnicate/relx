@@ -88,7 +88,7 @@ new(Name, Vsn, Dir, Applications, IncludedApplications, AppType) when is_atom(Ap
 -spec new(atom(), string(), file:name(), [atom()], [atom()], [atom()], app_type()) -> t().
 new(Name, Vsn, Dir, Applications, IncludedApplications, OptionalApplications, AppType) ->
     #{name => Name,
-      vsn => Vsn,
+      vsn => ensure_string(Vsn),
 
       applications => Applications,
       included_applications => IncludedApplications,
@@ -99,11 +99,18 @@ new(Name, Vsn, Dir, Applications, IncludedApplications, OptionalApplications, Ap
 
       app_type => AppType}.
 
+ensure_string(Vsn) when is_atom(Vsn) ->
+    atom_to_list(Vsn);
+ensure_string(Vsn) ->
+    Vsn.
+
 -spec name(t()) -> atom().
 name(#{name := Name}) ->
     Name.
 
 -spec vsn(t()) -> string().
+vsn(#{vsn := Vsn}) when is_atom(Vsn)->
+    atom_to_list(Vsn);
 vsn(#{vsn := Vsn}) ->
     Vsn.
 
